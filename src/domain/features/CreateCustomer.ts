@@ -1,3 +1,4 @@
+import AppError from '@/main/errors/AppError';
 import { ICustomersRepository } from '../repositories';
 
 type GroupInput = { id: string } | { name: string };
@@ -21,6 +22,10 @@ export class CreateCustomer implements ICreateCustomer {
   constructor(private readonly customersRepository: ICustomersRepository) {}
 
   public async execute({ email }: CreateCustomerDTO.Input): Promise<CreateCustomerDTO.Output> {
-    await this.customersRepository.findByEmail(email);
+    const customer = await this.customersRepository.findByEmail(email);
+
+    if (customer) {
+      throw new AppError('Email already used');
+    }
   }
 }

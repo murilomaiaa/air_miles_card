@@ -1,6 +1,8 @@
 import { CreateCustomer, CreateCustomerDTO } from '@/domain/features/CreateCustomer';
 import { ICustomersRepository } from '@/domain/repositories';
+import AppError from '@/main/errors/AppError';
 import { Mocked } from '@/tests/helpers/Mocked';
+import { makeFakeCustomer } from '@/tests/helpers/mocks';
 
 describe('CreateCustomer', () => {
   let systemUnderTests: CreateCustomer;
@@ -31,5 +33,13 @@ describe('CreateCustomer', () => {
 
     expect(customersRepository.findByEmail).toBeCalledTimes(1);
     expect(customersRepository.findByEmail).toBeCalledWith(args.email);
+  });
+
+  it('should throws if email is already registered', async () => {
+    customersRepository.findByEmail.mockResolvedValueOnce(makeFakeCustomer());
+
+    const promise = systemUnderTests.execute(args);
+
+    await expect(promise).rejects.toEqual(new AppError('Email already used'));
   });
 });
