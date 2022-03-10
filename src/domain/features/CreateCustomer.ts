@@ -1,4 +1,5 @@
 import AppError from '@/main/errors/AppError';
+import { Customer } from '../entities';
 import { IHashProvider } from '../providers';
 import { ICustomersRepository, IGroupsRepository } from '../repositories';
 
@@ -30,15 +31,25 @@ export class CreateCustomer implements ICreateCustomer {
     email,
     password,
     group: groupInput,
+    name,
   }: CreateCustomerDTO.Input): Promise<CreateCustomerDTO.Output> {
-    const customer = await this.customersRepository.findByEmail(email);
+    let customer = await this.customersRepository.findByEmail(email);
 
     if (customer) {
       throw new AppError('Email already used');
     }
 
-    await this.groupsRepository.findOrCreate(groupInput.name);
+    const group = await this.groupsRepository.findOrCreate(groupInput.name);
 
-    await this.hashProvider.hash(password);
+    const hashedPassword = await this.hashProvider.hash(password);
+
+    customer = new Customer({
+      name,
+      email,
+      password: hashedPassword,
+      group,
+    });
+
+    await this.customersRepository.save(customer);
   }
 }

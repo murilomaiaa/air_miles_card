@@ -5,7 +5,7 @@ export type CustomerProps = BaseEntityProps & {
   name: string;
   email: string;
   password: string;
-  group: GroupProps;
+  group: GroupProps | Group;
 };
 
 export class Customer extends BaseEntity {
@@ -19,6 +19,6 @@ export class Customer extends BaseEntity {
     this.name = props.name;
     this.email = props.email;
     this.password = props.password;
-    this.group = new Group(props.group);
+    this.group = props.group instanceof Group ? props.group : new Group(props.group);
   }
 }

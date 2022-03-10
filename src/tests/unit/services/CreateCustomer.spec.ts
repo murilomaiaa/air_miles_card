@@ -1,3 +1,4 @@
+import { Customer } from '@/domain/entities';
 import { CreateCustomer, CreateCustomerDTO } from '@/domain/features/CreateCustomer';
 import { IHashProvider } from '@/domain/providers';
 import { ICustomersRepository, IGroupsRepository } from '@/domain/repositories';
@@ -15,6 +16,7 @@ describe('CreateCustomer', () => {
   beforeAll(() => {
     customersRepository = {
       findByEmail: jest.fn().mockResolvedValue(undefined),
+      save: jest.fn().mockImplementation(async customer => customer),
     };
 
     groupsRepository = {
@@ -66,5 +68,19 @@ describe('CreateCustomer', () => {
 
     expect(hashProvider.hash).toBeCalledTimes(1);
     expect(hashProvider.hash).toBeCalledWith(args.password);
+  });
+
+  it('should save customer with correct args', async () => {
+    const customer = new Customer({
+      email: args.email,
+      name: args.name,
+      password: 'hashed',
+      group: makeFakeGroup(args.group.name),
+    });
+
+    await systemUnderTests.execute(args);
+
+    expect(customersRepository.save).toBeCalledTimes(1);
+    expect(customersRepository.save).toBeCalledWith({ ...customer, id: expect.any(String) });
   });
 });
