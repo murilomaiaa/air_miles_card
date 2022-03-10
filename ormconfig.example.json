@@ -4,7 +4,7 @@
   "port":5432,
   "username": "user",
   "password": "password",
-  "database": "database",
+  "database": "customers_core",
   "entities": ["./src/infra/typeorm/models/*.ts"],
   "migrations": ["./src/infra/typeorm/migrations/*.ts"],
   "cli": {

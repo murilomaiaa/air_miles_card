@@ -20,7 +20,7 @@ describe('CreateCustomer', () => {
     };
 
     plansRepository = {
-      findOrCreate: jest.fn().mockImplementation(async name => makeFakePlan(name)),
+      findOrCreateByName: jest.fn().mockImplementation(async name => makeFakePlan(name)),
     };
 
     hashProvider = {
@@ -56,11 +56,11 @@ describe('CreateCustomer', () => {
     await expect(promise).rejects.toEqual(new AppError('Email already used'));
   });
 
-  it('should call findOrCreate with correct args', async () => {
+  it('should call findOrCreateByName with correct args', async () => {
     await systemUnderTests.execute(args);
 
-    expect(plansRepository.findOrCreate).toBeCalledTimes(1);
-    expect(plansRepository.findOrCreate).toBeCalledWith(args.plan.name);
+    expect(plansRepository.findOrCreateByName).toBeCalledTimes(1);
+    expect(plansRepository.findOrCreateByName).toBeCalledWith(args.plan.name);
   });
 
   it('should call hashProvider with correct args', async () => {

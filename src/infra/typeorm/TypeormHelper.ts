@@ -28,6 +28,19 @@ export class TypeormHelper {
     await this.connection.runMigrations();
   }
 
+  async testConnect(): Promise<void> {
+    const migrations = await this.getMigrations();
+    this.connection = await createConnection({
+      ...env.db,
+      database: 'customers_core_test',
+      migrations,
+      type: 'postgres',
+      entities: [`${process.env.TS_NODE_DEV === undefined ? 'dist' : 'src'}/infra/typeorm/entities/index.{js,ts}`],
+    });
+
+    await this.connection.runMigrations();
+  }
+
   private async getMigrations() {
     const migrationsDir = path.join(__dirname, 'migrations');
     const migrations: any[] = [];

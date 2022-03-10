@@ -39,7 +39,7 @@ export class CreateCustomer implements ICreateCustomer {
       throw new AppError('Email already used');
     }
 
-    const plan = await this.plansRepository.findOrCreate(planInput.name);
+    const plan = await this.plansRepository.findOrCreateByName(planInput.name);
 
     const hashedPassword = await this.hashProvider.hash(password);
 
