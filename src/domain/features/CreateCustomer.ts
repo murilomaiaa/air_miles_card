@@ -13,7 +13,7 @@ export namespace CreateCustomerDTO {
     group: GroupInput;
   };
 
-  export type Output = void;
+  export type Output = Customer;
 }
 
 export interface ICreateCustomer {
@@ -50,6 +50,6 @@ export class CreateCustomer implements ICreateCustomer {
       group,
     });
 
-    await this.customersRepository.save(customer);
+    return this.customersRepository.save(customer);
   }
 }

@@ -83,4 +83,13 @@ describe('CreateCustomer', () => {
     expect(customersRepository.save).toBeCalledTimes(1);
     expect(customersRepository.save).toBeCalledWith({ ...customer, id: expect.any(String) });
   });
+
+  it('should return the created customer', async () => {
+    const customer = makeFakeCustomer();
+    customersRepository.save.mockResolvedValueOnce(customer);
+
+    const response = await systemUnderTests.execute(args);
+
+    expect(response).toEqual(customer);
+  });
 });
