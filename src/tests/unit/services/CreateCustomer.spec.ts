@@ -1,19 +1,24 @@
 import { CreateCustomer, CreateCustomerDTO } from '@/domain/features/CreateCustomer';
 import { IHashProvider } from '@/domain/providers';
-import { ICustomersRepository } from '@/domain/repositories';
+import { ICustomersRepository, IGroupsRepository } from '@/domain/repositories';
 import AppError from '@/main/errors/AppError';
 import { Mocked } from '@/tests/helpers/Mocked';
-import { makeFakeCustomer } from '@/tests/helpers/mocks';
+import { makeFakeCustomer, makeFakeGroup } from '@/tests/helpers/mocks';
 
 describe('CreateCustomer', () => {
   let systemUnderTests: CreateCustomer;
   let args: CreateCustomerDTO.Input;
   let customersRepository: Mocked<ICustomersRepository>;
+  let groupsRepository: Mocked<IGroupsRepository>;
   let hashProvider: Mocked<IHashProvider>;
 
   beforeAll(() => {
     customersRepository = {
       findByEmail: jest.fn().mockResolvedValue(undefined),
+    };
+
+    groupsRepository = {
+      findOrCreate: jest.fn().mockImplementation(async name => makeFakeGroup(name)),
     };
 
     hashProvider = {
@@ -31,7 +36,7 @@ describe('CreateCustomer', () => {
   });
 
   beforeEach(() => {
-    systemUnderTests = new CreateCustomer(customersRepository, hashProvider);
+    systemUnderTests = new CreateCustomer(customersRepository, groupsRepository, hashProvider);
   });
 
   it('should call findByEmail with correct args', async () => {
@@ -47,6 +52,13 @@ describe('CreateCustomer', () => {
     const promise = systemUnderTests.execute(args);
 
     await expect(promise).rejects.toEqual(new AppError('Email already used'));
+  });
+
+  it('should call findOrCreate with correct args', async () => {
+    await systemUnderTests.execute(args);
+
+    expect(groupsRepository.findOrCreate).toBeCalledTimes(1);
+    expect(groupsRepository.findOrCreate).toBeCalledWith(args.group.name);
   });
 
   it('should call hashProvider with correct args', async () => {

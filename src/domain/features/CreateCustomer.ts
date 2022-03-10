@@ -1,8 +1,8 @@
 import AppError from '@/main/errors/AppError';
 import { IHashProvider } from '../providers';
-import { ICustomersRepository } from '../repositories';
+import { ICustomersRepository, IGroupsRepository } from '../repositories';
 
-type GroupInput = { id: string } | { name: string };
+type GroupInput = { name: string };
 
 export namespace CreateCustomerDTO {
   export type Input = {
@@ -22,15 +22,22 @@ export interface ICreateCustomer {
 export class CreateCustomer implements ICreateCustomer {
   constructor(
     private readonly customersRepository: ICustomersRepository,
+    private readonly groupsRepository: IGroupsRepository,
     private readonly hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, password }: CreateCustomerDTO.Input): Promise<CreateCustomerDTO.Output> {
+  public async execute({
+    email,
+    password,
+    group: groupInput,
+  }: CreateCustomerDTO.Input): Promise<CreateCustomerDTO.Output> {
     const customer = await this.customersRepository.findByEmail(email);
 
     if (customer) {
       throw new AppError('Email already used');
     }
+
+    await this.groupsRepository.findOrCreate(groupInput.name);
 
     await this.hashProvider.hash(password);
   }
