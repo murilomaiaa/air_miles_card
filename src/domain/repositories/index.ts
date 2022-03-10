@@ -1,2 +1,2 @@
 export * from './ICustomersRepository';
-export * from './IGroupsRepository';
+export * from './IPlansRepository';

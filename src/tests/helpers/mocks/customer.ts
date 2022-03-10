@@ -1,4 +1,4 @@
-import { Customer, Group } from '@/domain/entities';
+import { Customer, Plan } from '@/domain/entities';
 
 export function makeFakeCustomer(): Customer {
   return new Customer({
@@ -6,12 +6,12 @@ export function makeFakeCustomer(): Customer {
     email: 'any-email',
     name: 'any-name',
     password: 'any-password',
-    group: { name: 'any-group', id: 'cb2a43e8-e092-4b23-a2d3-0de376f8632d' },
+    plan: { name: 'any-plan', id: 'cb2a43e8-e092-4b23-a2d3-0de376f8632d' },
   });
 }
 
-export function makeFakeGroup(name = 'any-group'): Group {
-  return new Group({
+export function makeFakePlan(name = 'any-plan'): Plan {
+  return new Plan({
     name,
     id: '82d840e5-118f-4b8a-942e-72b69e133ab7',
   });

@@ -1,13 +1,13 @@
 import { BaseEntity, BaseEntityProps } from './BaseEntity';
 
-export type GroupProps = BaseEntityProps & {
+export type PlanProps = BaseEntityProps & {
   name: string;
 };
 
-export class Group extends BaseEntity {
+export class Plan extends BaseEntity {
   private name: string;
 
-  constructor(props: GroupProps) {
+  constructor(props: PlanProps) {
     super(props);
     this.name = props.name;
   }

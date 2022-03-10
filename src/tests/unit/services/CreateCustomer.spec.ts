@@ -1,16 +1,16 @@
 import { Customer } from '@/domain/entities';
 import { CreateCustomer, CreateCustomerDTO } from '@/domain/features/CreateCustomer';
 import { IHashProvider } from '@/domain/providers';
-import { ICustomersRepository, IGroupsRepository } from '@/domain/repositories';
+import { ICustomersRepository, IPlansRepository } from '@/domain/repositories';
 import AppError from '@/main/errors/AppError';
 import { Mocked } from '@/tests/helpers/Mocked';
-import { makeFakeCustomer, makeFakeGroup } from '@/tests/helpers/mocks';
+import { makeFakeCustomer, makeFakePlan } from '@/tests/helpers/mocks';
 
 describe('CreateCustomer', () => {
   let systemUnderTests: CreateCustomer;
   let args: CreateCustomerDTO.Input;
   let customersRepository: Mocked<ICustomersRepository>;
-  let groupsRepository: Mocked<IGroupsRepository>;
+  let plansRepository: Mocked<IPlansRepository>;
   let hashProvider: Mocked<IHashProvider>;
 
   beforeAll(() => {
@@ -19,8 +19,8 @@ describe('CreateCustomer', () => {
       save: jest.fn().mockImplementation(async customer => customer),
     };
 
-    groupsRepository = {
-      findOrCreate: jest.fn().mockImplementation(async name => makeFakeGroup(name)),
+    plansRepository = {
+      findOrCreate: jest.fn().mockImplementation(async name => makeFakePlan(name)),
     };
 
     hashProvider = {
@@ -31,14 +31,14 @@ describe('CreateCustomer', () => {
       email: 'any@mail.com',
       name: 'any_name',
       password: 'any_password',
-      group: {
-        name: 'any_group',
+      plan: {
+        name: 'any_plan',
       },
     };
   });
 
   beforeEach(() => {
-    systemUnderTests = new CreateCustomer(customersRepository, groupsRepository, hashProvider);
+    systemUnderTests = new CreateCustomer(customersRepository, plansRepository, hashProvider);
   });
 
   it('should call findByEmail with correct args', async () => {
@@ -59,8 +59,8 @@ describe('CreateCustomer', () => {
   it('should call findOrCreate with correct args', async () => {
     await systemUnderTests.execute(args);
 
-    expect(groupsRepository.findOrCreate).toBeCalledTimes(1);
-    expect(groupsRepository.findOrCreate).toBeCalledWith(args.group.name);
+    expect(plansRepository.findOrCreate).toBeCalledTimes(1);
+    expect(plansRepository.findOrCreate).toBeCalledWith(args.plan.name);
   });
 
   it('should call hashProvider with correct args', async () => {
@@ -75,7 +75,7 @@ describe('CreateCustomer', () => {
       email: args.email,
       name: args.name,
       password: 'hashed',
-      group: makeFakeGroup(args.group.name),
+      plan: makeFakePlan(args.plan.name),
     });
 
     await systemUnderTests.execute(args);

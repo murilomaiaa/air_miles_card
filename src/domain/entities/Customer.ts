@@ -1,24 +1,24 @@
 import { BaseEntity, BaseEntityProps } from './BaseEntity';
-import { Group, GroupProps } from './Group';
+import { Plan, PlanProps } from './Plan';
 
 export type CustomerProps = BaseEntityProps & {
   name: string;
   email: string;
   password: string;
-  group: GroupProps | Group;
+  plan: PlanProps | Plan;
 };
 
 export class Customer extends BaseEntity {
   private name: string;
   private email: string;
   private password: string;
-  private group: Group;
+  private plan: Plan;
 
   constructor(props: CustomerProps) {
     super(props);
     this.name = props.name;
     this.email = props.email;
     this.password = props.password;
-    this.group = props.group instanceof Group ? props.group : new Group(props.group);
+    this.plan = props.plan instanceof Plan ? props.plan : new Plan(props.plan);
   }
 }

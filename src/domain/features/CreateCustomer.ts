@@ -1,16 +1,16 @@
 import AppError from '@/main/errors/AppError';
 import { Customer } from '../entities';
 import { IHashProvider } from '../providers';
-import { ICustomersRepository, IGroupsRepository } from '../repositories';
+import { ICustomersRepository, IPlansRepository } from '../repositories';
 
-type GroupInput = { name: string };
+type PlanInput = { name: string };
 
 export namespace CreateCustomerDTO {
   export type Input = {
     name: string;
     email: string;
     password: string;
-    group: GroupInput;
+    plan: PlanInput;
   };
 
   export type Output = Customer;
@@ -23,14 +23,14 @@ export interface ICreateCustomer {
 export class CreateCustomer implements ICreateCustomer {
   constructor(
     private readonly customersRepository: ICustomersRepository,
-    private readonly groupsRepository: IGroupsRepository,
+    private readonly plansRepository: IPlansRepository,
     private readonly hashProvider: IHashProvider,
   ) {}
 
   public async execute({
     email,
     password,
-    group: groupInput,
+    plan: planInput,
     name,
   }: CreateCustomerDTO.Input): Promise<CreateCustomerDTO.Output> {
     let customer = await this.customersRepository.findByEmail(email);
@@ -39,7 +39,7 @@ export class CreateCustomer implements ICreateCustomer {
       throw new AppError('Email already used');
     }
 
-    const group = await this.groupsRepository.findOrCreate(groupInput.name);
+    const plan = await this.plansRepository.findOrCreate(planInput.name);
 
     const hashedPassword = await this.hashProvider.hash(password);
 
@@ -47,7 +47,7 @@ export class CreateCustomer implements ICreateCustomer {
       name,
       email,
       password: hashedPassword,
-      group,
+      plan,
     });
 
     return this.customersRepository.save(customer);
