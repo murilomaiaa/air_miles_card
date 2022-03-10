@@ -1,5 +1,14 @@
 import { randomUUID } from 'crypto';
 
+export type BaseEntityDTO = {
+  id: string;
+  createdAt: Date;
+  updatedAt?: Date;
+  updatedBy?: string;
+  deletedAt?: Date;
+  deletedBy?: string;
+};
+
 export type BaseEntityProps = {
   id?: string;
   createdAt?: Date;
