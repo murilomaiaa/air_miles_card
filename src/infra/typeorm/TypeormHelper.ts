@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import { Connection, createConnection } from 'typeorm';
 import env from '@/main/config/env';
-import { entities } from './entities';
 
 export class TypeormHelper {
   private connection?: Connection;
@@ -19,6 +18,7 @@ export class TypeormHelper {
 
   async connect(): Promise<void> {
     const migrations = await this.getMigrations();
+    const entities = await this.getEntities();
     this.connection = await createConnection({
       ...env.db,
       migrations,
@@ -42,5 +42,23 @@ export class TypeormHelper {
         });
     }
     return migrations;
+  }
+  private async getEntities() {
+    const entitiesDir = path.join(__dirname, 'entities');
+    const entities: any[] = [];
+    const dirExists = fs.existsSync(entitiesDir);
+    if (dirExists) {
+      const files = await readdir(entitiesDir, { encoding: 'utf-8' });
+      files
+        .filter(file => file.includes('DB.'))
+        .forEach(async file => {
+          console;
+          const imports = await import(`${entitiesDir}/${file}`);
+          const [className] = file.split('.');
+          entities.push(imports[className]);
+        });
+    }
+
+    return entities;
   }
 }
