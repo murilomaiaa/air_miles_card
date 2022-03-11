@@ -23,7 +23,7 @@ export class CustomerDB {
   @Column()
   password!: string;
 
-  @ManyToOne(() => PlanDB)
+  @ManyToOne(() => PlanDB, { eager: true })
   @JoinColumn({ name: 'plan_id' })
   plan!: PlanDB;
 
