@@ -5,8 +5,8 @@ import { make201, make400, make404, make500 } from '../responses.doc';
 export const customersRoute = {
   [makeCreateCustomersController().path]: {
     post: {
-      tags: ['Faithful'],
-      summary: 'Create a new faithful',
+      tags: ['Customers'],
+      summary: 'Create a new customer',
       requestBody: {
         required: true,
         content: {

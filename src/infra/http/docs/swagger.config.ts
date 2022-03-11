@@ -4,8 +4,8 @@ import { customersRoute } from './routes/customer.doc';
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Faithful management',
-    description: "Faithful management's endpoints",
+    title: 'Customers management',
+    description: "Customers management's endpoints",
     version: '1.0.0',
   },
   servers: [
@@ -14,7 +14,7 @@ export default {
       description: 'Server running local',
     },
   ],
-  apis: ['./src/infra/http/docs/**/**.doc.ts'],
+  // apis: ['./src/infra/http/docs/**/**.doc.ts'],
   paths: {
     ...customersRoute,
   },
