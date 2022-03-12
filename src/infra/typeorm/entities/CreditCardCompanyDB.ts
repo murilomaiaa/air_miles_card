@@ -1,7 +1,7 @@
 import { Column, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('plans')
-export class PlanDB {
+@Entity('credit_card_companies')
+export class CreditCardCompanyDB {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 

@@ -1,23 +1,23 @@
 import { BaseEntity, BaseEntityProps } from './BaseEntity';
 
-export type PlanPartial = {
+export type CreditCardCompanyPartial = {
   id: string;
   name: string;
 };
 
-export type PlanProps = BaseEntityProps & {
+export type CreditCardCompanyProps = BaseEntityProps & {
   name: string;
 };
 
-export class Plan extends BaseEntity {
+export class CreditCardCompany extends BaseEntity {
   private name: string;
 
-  constructor(props: PlanProps) {
+  constructor(props: CreditCardCompanyProps) {
     super(props);
     this.name = props.name;
   }
 
-  toPartial(): PlanPartial {
+  toPartial(): CreditCardCompanyPartial {
     return {
       id: this.id,
       name: this.name,

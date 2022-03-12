@@ -1,6 +1,6 @@
-import { CustomersRepository, PlansRepository } from '@/infra/typeorm/repositories';
+import { CardsRepository, CreditCardCompaniesRepository } from '@/infra/typeorm/repositories';
 
 export const repositories = {
-  ICustomersRepository: new CustomersRepository(),
-  IPlansRepository: new PlansRepository(),
+  ICardsRepository: new CardsRepository(),
+  ICreditCardCompaniesRepository: new CreditCardCompaniesRepository(),
 };

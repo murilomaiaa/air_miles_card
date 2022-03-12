@@ -1,11 +1,11 @@
 import env from '@/main/config/env';
-import { customersRoute } from './routes/customer.doc';
+import { cardsRoute } from './routes';
 
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Customers management',
-    description: "Customers management's endpoints",
+    title: 'Cards management',
+    description: "Cards management's endpoints",
     version: '1.0.0',
   },
   servers: [
@@ -16,6 +16,6 @@ export default {
   ],
   // apis: ['./src/infra/http/docs/**/**.doc.ts'],
   paths: {
-    ...customersRoute,
+    ...cardsRoute,
   },
 };

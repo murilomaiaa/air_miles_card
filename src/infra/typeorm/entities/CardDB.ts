@@ -7,25 +7,34 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { PlanDB } from './PlanDB';
+import { CreditCardCompanyDB } from './CreditCardCompanyDB';
 
-@Entity('customers')
-export class CustomerDB {
+@Entity('cards')
+export class CardDB {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
-  name!: string;
+  number!: string;
+
+  @Column({ name: 'holder_name' })
+  holderName!: string;
+
+  @Column({ name: 'holder_email' })
+  holderEmail!: string;
+
+  @Column({ name: 'expiration_month' })
+  expirationMonth!: string;
+
+  @Column({ name: 'expiration_year' })
+  expirationYear!: string;
 
   @Column()
-  email!: string;
+  cvv!: string;
 
-  @Column()
-  password!: string;
-
-  @ManyToOne(() => PlanDB, { eager: true })
-  @JoinColumn({ name: 'plan_id' })
-  plan!: PlanDB;
+  @ManyToOne(() => CreditCardCompanyDB, { eager: true })
+  @JoinColumn({ name: 'credit_card_company_id' })
+  creditCardCompany!: CreditCardCompanyDB;
 
   @Column({ name: 'created_at', type: 'timestamp', default: 'now()' })
   createdAt!: Date;

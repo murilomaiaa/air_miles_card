@@ -1,2 +1,2 @@
-export * from './CustomersRepository';
-export * from './PlansRepository';
+export * from './CardsRepository';
+export * from './CreditCardCompaniesRepository';

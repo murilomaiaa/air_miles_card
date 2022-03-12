@@ -1,5 +1,5 @@
 {
-  "name": "backend-template",
+  "name": "air_miles_card",
   "version": "0.0.1",
   "main": "dist/main/api/index.js",
   "license": "MIT",

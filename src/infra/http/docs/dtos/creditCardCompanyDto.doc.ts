@@ -1,4 +1,4 @@
-export const plan = {
+export const creditCardCompany = {
   dto: {
     type: 'object',
     required: true,
@@ -7,6 +7,6 @@ export const plan = {
     },
   },
   example: {
-    name: 'Premium',
+    name: 'Visa',
   },
 };

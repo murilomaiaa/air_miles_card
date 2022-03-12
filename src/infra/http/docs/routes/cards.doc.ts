@@ -1,18 +1,18 @@
-import { makeCreateCustomersController } from '@/main/factories/controllers/makeCreateCustomersController';
-import { customer } from '../dtos/customerDto.doc';
+import { makeCreateCardsController } from '@/main/factories/controllers/makeCreateCardsController';
+import { card } from '../dtos/cardDto.doc';
 import { make201, make400, make404, make500 } from '../responses.doc';
 
-export const customersRoute = {
-  [makeCreateCustomersController().path]: {
+export const cardsRoute = {
+  [makeCreateCardsController().path]: {
     post: {
-      tags: ['Customers'],
-      summary: 'Create a new customer',
+      tags: ['Cards'],
+      summary: 'Create a new card',
       requestBody: {
         required: true,
         content: {
           'application/json': {
-            schema: customer.schema,
-            example: customer.example,
+            schema: card.schema,
+            example: card.example,
           },
         },
       },
@@ -35,7 +35,7 @@ export const customersRoute = {
             },
             message: {
               type: 'string',
-              example: 'Email already used',
+              example: 'Invalid month',
             },
           },
         }),

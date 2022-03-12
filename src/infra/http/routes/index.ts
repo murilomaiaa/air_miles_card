@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { makeCreateCustomersController } from '@/main/factories/controllers/makeCreateCustomersController';
+import { makeCreateCardsController } from '@/main/factories/controllers/makeCreateCardsController';
 
 const routes = Router();
 
-const controller = makeCreateCustomersController();
+const controller = makeCreateCardsController();
 
 routes.post(controller.path, async (req, res) => {
   const { body, status } = await controller.handle(req);

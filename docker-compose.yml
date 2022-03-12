@@ -1,29 +1,29 @@
 version: '3'
 
 networks:
-  customers_core:
+  air_miles_card:
     driver: bridge
 
 services:
-  customers_core_db:
+  air_miles_card_db:
     image: docker.io/bitnami/postgresql:14
-    container_name: customers_core_db
+    container_name: air_miles_card_db
     restart: always
     tty: true
     environment:
       - POSTGRESQL_USERNAME=root
       - POSTGRESQL_PASSWORD==root
-      - POSTGRESQL_DB=customers_core
+      - POSTGRESQL_DB=air_miles_card
     volumes:
       - /var/docker/postgresql:/bitnami/postgresql
     networks:
-      - customers_core
+      - air_miles_card
     ports:
       - "5432:5432"
 
-  customers_core_redis:
+  air_miles_card_redis:
     image: docker.io/bitnami/redis:6.2
-    container_name: customers_core_redis
+    container_name: air_miles_card_redis
     environment:
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
       - REDIS_AOF_ENABLED=no
@@ -31,21 +31,21 @@ services:
     volumes:
       - '/var/docker/redis:/bitnami/redis/data'
     networks:
-      - customers_core
+      - air_miles_card
     ports:
       - '6379:6379'
 
-  customers_core_node:
+  air_miles_card_node:
     build: .
-    container_name: customers_core_node
-    entrypoint: dockerize -wait tcp://customers_core_db:5432 -timeout 20s yarn start
+    container_name: air_miles_card_node
+    entrypoint: dockerize -wait tcp://air_miles_card_db:5432 -timeout 20s yarn start
     tty: true
     restart: always
     networks:
-      - customers_core
+      - air_miles_card
     depends_on:
-      - customers_core_db
-      - customers_core_redis
+      - air_miles_card_db
+      - air_miles_card_redis
     ports:
       - '3333:3333'
 
@@ -53,11 +53,11 @@ services:
   #   build:
   #     context: .
   #     dockerfile: Dockerfile.nginx
-  #   container_name: customers_core_nginx
+  #   container_name: air_miles_card_nginx
   #   networks:
-  #     - customers_core
+  #     - air_miles_card
   #   ports:
   #     - '80:80'
   #   depends_on:
-  #     - customers_core_node
+  #     - air_miles_card_node
 
