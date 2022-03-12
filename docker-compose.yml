@@ -6,16 +6,17 @@ networks:
 
 services:
   air_miles_card_db:
-    image: docker.io/bitnami/postgresql:14
+    image: postgres:14
     container_name: air_miles_card_db
     restart: always
     tty: true
     environment:
-      - POSTGRESQL_USERNAME=root
-      - POSTGRESQL_PASSWORD==root
-      - POSTGRESQL_DB=air_miles_card
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD==root
+      - POSTGRES_DB=air_miles_card
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - /var/docker/postgresql:/bitnami/postgresql
+      - /var/docker/postgresql:/var/lib/postgresql/data/pgdata
     networks:
       - air_miles_card
     ports:
@@ -48,16 +49,3 @@ services:
       - air_miles_card_redis
     ports:
       - '3333:3333'
-
-  # nginx:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.nginx
-  #   container_name: air_miles_card_nginx
-  #   networks:
-  #     - air_miles_card
-  #   ports:
-  #     - '80:80'
-  #   depends_on:
-  #     - air_miles_card_node
-
