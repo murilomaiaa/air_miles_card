@@ -6,6 +6,12 @@ const env = {
     password: process.env.DB_PASSWORD as string,
     database: process.env.DB_DATABASE as string,
   },
+  queue: {
+    host: process.env.RABBITMQ_HOST as string,
+    port: (process.env.RABBITMQ_PORT ? Number(process.env.RABBITMQ_PORT) : undefined) as number,
+    username: process.env.RABBITMQ_USER as string,
+    password: process.env.RABBITMQ_PASSWORD as string,
+  },
   apiPort: process.env.PORT ?? 3333,
 };
 

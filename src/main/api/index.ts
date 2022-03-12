@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import 'dotenv/config';
 
-import { TypeormHelper } from '@/infra/typeorm';
 import env from '../config/env';
+import { TypeormHelper } from '@/infra/typeorm';
+import { RabbitMQBroker } from '@/infra/queue';
 
 TypeormHelper.getInstance()
   .connect()
@@ -12,5 +13,8 @@ TypeormHelper.getInstance()
       // eslint-disable-next-line no-console
       console.log(`Listening on port ${env.apiPort}`);
     });
+
+    const broker = new RabbitMQBroker();
+    await broker.start();
   })
   .catch(console.log);
