@@ -11,6 +11,7 @@ export class CardPublisher implements ICardPublisher {
   }
 
   create(data: CardToPublish): void {
+    console.log('publishing ', data);
     this.server.publishInQueue(this.queueName, JSON.stringify(data));
   }
 }
