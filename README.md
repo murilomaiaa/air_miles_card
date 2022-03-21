@@ -1,3 +1,2 @@
- - A API deverá receber a data no formato MM/YY (mês e ano);
- - A API não deverá permitir código de segurança contendo menos ou mais de três dígitos;
- - A API deverá permitir código de segurança contendo apenas números;
+# Air Miles Card
+Micro serviço que faz parte do [Air Miles](https://github.com/murilomaiaa/air_miles)
