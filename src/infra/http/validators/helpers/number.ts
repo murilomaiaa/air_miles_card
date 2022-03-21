@@ -7,7 +7,7 @@ type Helpers = {
 const validator = (value: string, helpers: Helpers): string | Record<string, unknown> => {
   let result: string | Record<string, unknown> = value;
 
-  if (Number.isNaN(value)) {
+  if (Number.isNaN(Number(value))) {
     result = helpers.message('Field must contain only numbers');
   }
 

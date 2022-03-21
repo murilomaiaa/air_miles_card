@@ -7,11 +7,11 @@ export class CreateCardValidator implements IValidator {
 
   constructor() {
     this.validation = Joi.object({
-      number: number.length(16).required(),
+      number: number.message('number must contain only numbers').length(16).required(),
       holderName: Joi.string().required(),
       holderEmail: email.required(),
       expiration: cardExpiry.required(),
-      cvv: number.length(3).required(),
+      cvv: number.message('cvv must contain only numbers').length(3).required(),
       creditCardCompany: Joi.object({
         name: Joi.string().required(),
       }),
