@@ -27,6 +27,8 @@ describe('CreateCard', () => {
       creditCardCompany: {
         name: 'any_creditCardCompany',
       },
+      cvv: '123',
+      holderEmail: 'any_mail@mail.com',
     };
   });
 
@@ -47,6 +49,8 @@ describe('CreateCard', () => {
       expirationYear: '29',
       holderName: args.holderName,
       number: args.number,
+      cvv: args.holderEmail,
+      holderEmail: args.holderEmail,
       creditCardCompany: makeFakeCreditCardCompany(args.creditCardCompany.name),
     });
 
