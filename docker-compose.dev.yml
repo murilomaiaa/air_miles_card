@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  air_miles_rabbitmq:
+    image: "rabbitmq:3.8-management-alpine"
+    container_name: air_miles_rabbitmq
+    hostname: air_miles_rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+
+  air_miles_card_redis:
+    image: redis:6.2-alpine
+    container_name: air_miles_card_redis
+    environment:
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+      - REDIS_AOF_ENABLED=no
+      - REDIS_PASSWORD=root
+    ports:
+      - '6379:6379'
+
+
+  air_miles_card_db:
+    image: postgres:13-alpine
+    container_name: air_miles_card_db
+    restart: always
+    tty: true
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=air_miles_card
+    ports:
+      - '5432:5432'
