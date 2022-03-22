@@ -14,7 +14,7 @@ describe('CreateCard', () => {
     cardsRepository = {
       findByEmail: jest.fn().mockResolvedValue(undefined),
       save: jest.fn().mockImplementation(async card => card),
-    };
+    } as Mocked<ICardsRepository>;
 
     creditCardCompaniesRepository = {
       findOrCreateByName: jest.fn().mockImplementation(async name => makeFakeCreditCardCompany(name)),
@@ -49,7 +49,7 @@ describe('CreateCard', () => {
       expirationYear: '29',
       holderName: args.holderName,
       number: args.number,
-      cvv: args.holderEmail,
+      cvv: args.cvv,
       holderEmail: args.holderEmail,
       creditCardCompany: makeFakeCreditCardCompany(args.creditCardCompany.name),
     });
