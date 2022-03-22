@@ -11,6 +11,11 @@ export class CardsRepository implements ICardsRepository {
     this.repository = getRepository(CardDB);
   }
 
+  async findAll(): Promise<Card[]> {
+    const cards = await this.repository.find();
+    return CardMapper.mapMany(cards);
+  }
+
   async findByEmail(email: string): Promise<Card | undefined> {
     const card = await this.repository.findOne({ where: { email } });
 

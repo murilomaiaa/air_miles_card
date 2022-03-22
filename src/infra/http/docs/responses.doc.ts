@@ -1,3 +1,12 @@
+export const make200 = (schema: object) => ({
+  description: 'OK',
+  content: {
+    'application/json': {
+      schema,
+    },
+  },
+});
+
 export const make201 = (schema: object) => ({
   description: 'Created',
   content: {

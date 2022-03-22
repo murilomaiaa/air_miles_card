@@ -10,7 +10,7 @@ export default {
   },
   servers: [
     {
-      url: `http://localhost:${env.apiPort}`,
+      url: `http://localhost:${env.apiPort}/api`,
       description: 'Server running local',
     },
   ],

@@ -14,7 +14,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(rateLimiter);
-app.use(routes);
+app.use('/api', routes);
 app.use(errorHandler);
 
 const env = process.env.NODE_ENV ?? '';

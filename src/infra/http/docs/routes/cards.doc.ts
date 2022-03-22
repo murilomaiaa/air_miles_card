@@ -1,9 +1,8 @@
-import { makeCreateCardsController } from '@/main/factories/controllers/makeCreateCardsController';
-import { card } from '../dtos/cardDto.doc';
-import { make201, make400, make404, make500 } from '../responses.doc';
+import { card, cardOutput } from '../dtos/cardDto.doc';
+import { make200, make201, make400, make404, make500 } from '../responses.doc';
 
 export const cardsRoute = {
-  [makeCreateCardsController().path]: {
+  ['/cards']: {
     post: {
       tags: ['Cards'],
       summary: 'Create a new card',
@@ -40,6 +39,23 @@ export const cardsRoute = {
           },
         }),
         '404': make404(),
+        '500': make500(),
+      },
+    },
+    get: {
+      tags: ['Cards'],
+      summary: 'List all cards',
+      responses: {
+        '200': make200({
+          type: 'object',
+          properties: {
+            creditCards: {
+              type: 'array',
+              items: cardOutput.schema,
+              example: [cardOutput.example],
+            },
+          },
+        }),
         '500': make500(),
       },
     },
