@@ -27,6 +27,10 @@ export class CardsRepository implements ICardsRepository {
     return card ? CardMapper.mapOne(card) : undefined;
   }
 
+  async remove(card: Card): Promise<void> {
+    await this.repository.softRemove({ id: card.getId() });
+  }
+
   async save(card: Card): Promise<Card> {
     const dto = card.toDto();
     const savedCard = await this.repository.save(dto);

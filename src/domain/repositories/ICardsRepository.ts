@@ -5,4 +5,5 @@ export interface ICardsRepository {
   findById(id: string): Promise<Card | undefined>;
   findAll(): Promise<Card[]>;
   save(card: Card): Promise<Card>;
+  remove(card: Card): Promise<void>;
 }

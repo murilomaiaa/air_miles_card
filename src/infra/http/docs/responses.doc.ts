@@ -25,7 +25,7 @@ export const make400 = (schema: object) => ({
   },
 });
 
-export const make404 = () => ({
+export const make404 = (message = 'Not found') => ({
   description: 'Not Found',
   content: {
     'application/json': {
@@ -38,7 +38,7 @@ export const make404 = () => ({
           },
           message: {
             type: 'string',
-            example: 'Not found',
+            example: message,
           },
         },
       },
